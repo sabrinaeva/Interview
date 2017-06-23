@@ -1,0 +1,15 @@
+三种方式：
+1、jQuery ajax
+  客户端：把dataType:’jsonp’。
+注解：ajax的方式只支持get方式的跨域。并且ajax 在设置了datatpe：‘jsonp'之后，
+$.ajax就和ajax XMLHttpRequest 没什么关系了，
+变成了使用JSONP协议，JSONP是非官方协议。
+    服务端：json数据要用callback（）包裹
+
+2、jquery-jsonp的jquery的插件
+3、h5新引入的
+“XHR2” 全称 “XMLHttpRequest Level2” 是HTML5提供的方法，对跨域访问提供了很好的支持，并且还有一些新的功能。
+* IE10以下的版本都不支持
+* 只需要在服务器端头部加上下面两句代码：
+header( "Access-Control-Allow-Origin:*cd" );
+header( "Access-Control-Allow-Methods:POST,GET" );
