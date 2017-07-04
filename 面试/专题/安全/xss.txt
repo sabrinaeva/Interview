@@ -1,0 +1,7 @@
+xss攻击：
+    是什么？ 怎么做 ？http://www.freebuf.com/articles/web/40520.html（系列文章）
+    如何防备？
+CSRF攻击：
+    是什么？ 怎么做？ http://www.freebuf.com/articles/web/55965.html
+                   http://www.freebuf.com/articles/web/107207.html
+    如何防备？

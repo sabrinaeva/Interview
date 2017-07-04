@@ -7,7 +7,7 @@ $.ajax就和ajax XMLHttpRequest 没什么关系了，
     服务端：json数据要用callback（）包裹
 
 2、jquery-jsonp的jquery的插件
-3、h5新引入的
+3、h5新引入的 <a>http://www.ruanyifeng.com/blog/2012/09/xmlhttprequest_level_2.html</a>
 “XHR2” 全称 “XMLHttpRequest Level2” 是HTML5提供的方法，对跨域访问提供了很好的支持，并且还有一些新的功能。
 * IE10以下的版本都不支持
 * 只需要在服务器端头部加上下面两句代码：
