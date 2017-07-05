@@ -1,0 +1,12 @@
+//h4的api
+  history.back();//历史列表中下一个URL
+  history.forward();//历史列表中上一个URL
+  history.go(2); //可以是数字 -2（后退两页） 2（前进两页) 0 刷新当前页面
+  history.go('www.baidu.com')//到某个url
+//h5的api
+  history.pushState('state:存储JSON字符串，可以用在popstate事件中','title: 很多浏览器不支持，最好用null','随意的url'); //增加一条
+  history.replaceState('state:存储JSON字符串，可以用在popstate事件中','title: 很多浏览器不支持，最好用null','随意的url');//替换
+  在WebKit浏览器中，popstate事件在document的onload事件后触发，Firefox和IE没有这种行为
+  尽管当我们使用pushState()和replaceState()进行处理时，期待popstate事件被触发。
+  但实际上，情况并不是这样。相反，当你浏览会话历史记录时，不管你是点击前进或者后退按钮，
+  还是使用history.go和history.back方法，popstate都会被触发。

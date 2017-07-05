@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>form</title>
+</head>
+<body>
+<!--h4表单,元素需要嵌套在form标签里面-->
+<form>
+  <input>
+  <button>h4表单提交</button>
+</form>
+<!--h5的不需要嵌套，只需要指定from
+HTML5中为了方便排版，可以使from中的表单标签脱离from的嵌套。
+方法:from指定ID，所有表单标签均添加from=id属性。
+-->
+<form id="h5Form" oninput="dddd.value = age.value + number.value"></form>
+名字：<input type="name" required name="name" form="h5Form" id="name"/>
+<br>年龄：<input type="text" name="age" form="h5Form" id="age"/>
+<br>email:<input type="email" Autofocus name="email" form="h5Form" id="email"/>
+<br>time:<input type="time" name="time" form="h5Form" id="time"/>
+<br>date:<input type="date" name="date" form="h5Form" id="date"/>
+<br>月:<input type="month" name="month" form="h5Form" id="month"/>
+<br>周:<input type="week" name="week" form="h5Form" id="week"/>
+<br>number:<input type="number" name="number" form="h5Form" id="number"/>
+<br>search:<input type="search" name="search" form="h5Form" id="search"/>
+<br>color:<input type="color" name="color" form="h5Form" id="color"/>
+<br>url:<input type="url" name="url" form="h5Form" id="url"/>
+<br>滑动条:<input type="range" name="range" form="h5Form" id="range" max="10"/>
+age*number=<output name="dddd" for="age number" form="h5Form"></output>
+<br>
+<button form="h5Form" type="submit">h5提交</button>
+<br>
+<hr/>
+自动填充
+<input type="text" name="auto" value="" list="list">
+<datalist id="list">
+  <option>名字</option>
+  <option>试试</option>
+  <option>方式</option>
+  <option>舒服舒服</option>
+</datalist>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas</title>
+    </head>
+<body>
+<canvas width="800px" height="800px" id="canvas">
+  您的浏览器不支持
+</canvas>
+</body>
+<script type="text/javascript">
+  var canvas = document.getElementById('canvas');
+  var cxt = canvas.getContext('2d');//设置绘图环境，
+  //画一条直线，路径图形要封闭图形
+  cxt.beginPath();
+  cxt.moveTo(30,30);//从哪里开始
+  cxt.lineTo(100,30);//画到哪里
+  cxt.lineWidth=10;//设置笔的宽度
+  cxt.strokeStyle = 'red';//设置颜色
+  cxt.stroke();//才开始画了
+  cxt.closePath();
+
+
+  //画一个空心圆
+  cxt.beginPath();
+  cxt.arc(200,200,50,0,360,false);
+  cxt.lineWidth=3;//设置笔的宽度
+  cxt.strokeStyle = 'green';//设置颜色
+  cxt.stroke();
+  cxt.closePath();
+
+  //画实心圆
+  cxt.beginPath();
+  cxt.arc(200,300,50,0,360,false);//true 和false 出现的颜色不一样
+  cxt.fillStyle='yellow';
+  cxt.strokeStyle = 'red';
+  cxt.stroke();
+  cxt.fill();
+  cxt.closePath();
+  //画矩形,矩形不是路径
+  cxt.rect(300,200,100,100);
+  cxt.stroke();
+  cxt.closePath();
+  //画矩形的其他方法
+  cxt.strokeRect(300,320,100,100);
+//实心矩形
+  cxt.beginPath();
+  cxt.rect(300,430, 100,100);
+  cxt.fill();//把前面的也填充了,所以不管是画什么图形，就要开始和结束
+  cxt.closePath();
+  //其他方法--->>建议使用这个方法
+  cxt.fillRect(300,540,50,100)
+
+  //写文字
+  cxt.font = '40px';
+  cxt.fillText('这里填充字体,sdfsd',100,300);//实心字
+  //笔触设置为1像素
+  cxt.lineWidth=1;
+  cxt.strokeText('strockeText，的字体',100,500)
+//图片
+  var img = new Image();
+  img.src = '060793.jpg';
+  cxt.drawImage(img, 500,300,100,100);
+
+  //画三角行
+  cxt.beginPath();
+  cxt.moveTo(100,300);
+  cxt.lineTo(50,450);
+  cxt.lineTo(150,450);
+  cxt.lineTo(100,300);
+//  cxt.fill();//可以填充为实心
+  cxt.stroke();
+  cxt.closePath();
+
+
+  //翻转图片（）
+  cxt.save();//设置旋转环境
+  //重置0,0 点位置
+  cxt.translate(30,30);
+  //设置旋转
+  cxt.rotate(-30*Math.PI/180)//参数是弧度
+    //旋转线段
+    cxt.beginPath();
+    cxt.moveTo(0,0);
+    cxt.lineWidth = 10;
+    cxt.strokeStyle = 'red';
+    cxt.lineTo(50,100);
+    cxt.stroke();
+    cxt.closePath();
+
+  //旋转之后的放回到原画布
+  cxt.restore();
+
+
+  //图片旋转
+  cxt.save();
+  cxt.translate(500,300);
+  cxt.rotate(20*Math.PI/180);
+  cxt.drawImage(img,0,0,100,100); //图片，起始位置， 大小
+  cxt.restore();
+
+</script>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>太阳系</title>
+</head>
+<canvas width="1000" height="1000" id="solarSystem" style="background-color: black">
+  您的浏览器不支持canvas
+</canvas>
+<body>
+<script type="text/javascript">
+  var solarSystem = document.getElementById('solarSystem');
+  var cxt = solarSystem.getContext('2d');
+
+    //轨道
+  var drawTrack = function () {
+    for(var i = 0; i<8;i++){
+      cxt.beginPath();
+      cxt.arc(500,500,50*(i+1),0,360,false);
+      cxt.strokeStyle = 'white';
+      cxt.stroke();
+      cxt.closePath();
+    }
+  }
+  drawTrack();
+  function Star(x,y,radius,startColor,endColor,cycle) {
+    //画星球需要哪些属性：坐标，半径，开始颜色，结束颜色
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.startColor = startColor;
+    this.endColor = endColor;
+    this.cycle = cycle;
+    this.color = null;
+//设置时间
+    this.time = 0;
+    this.draw = function () {
+      cxt.save();
+      cxt.translate(500,500);
+      cxt.rotate(this.time*(360/this.cycle)*Math.PI/180);
+      this.color = cxt.createRadialGradient(this.x,this.y,0, this.x,this.y, this.radius);
+      this.color.addColorStop(0,this.startColor);
+      this.color.addColorStop(1,this.endColor);
+      cxt.fillStyle = this.color;
+      cxt.beginPath();
+      cxt.arc(this.x, this.y, this.radius,0,360,false);
+      cxt.fill();
+      cxt.closePath();
+      var self = this;
+      if(self.cycle == 365){
+        function drawMoon() {
+          cxt.save();
+          cxt.translate(self.x, self.y);
+          cxt.rotate(self.time*(360/30)*Math.PI/180);
+          cxt.beginPath();
+          cxt.arc(0, 20, 5, 0, 360, false);
+          cxt.fillStyle='red';
+          cxt.fill();
+          cxt.closePath();
+          cxt.restore();
+        }
+        drawMoon();
+      }
+      cxt.restore();
+      this.time ++;
+    }
+  }
+  //画太阳
+  function Sun() {
+    Star.call(this, 0, 0, 20, '#FFFF00', '#FF9900', 0)
+  }
+  var sun = new Sun();
+  //水星
+  function Mercury() {
+    Star.call(this, 0, -50, 10, '#A69697', '#5C3E40', 87.7)
+  }
+  //金星
+  function Venus() {
+    Star.call(this, 0, -100, 10, '#C4BBAC', '#1F1315', 224.701)
+  }
+
+  //地球
+  function Earth() {
+    Star.call(this, 0, -150, 10, '#78B1E8', '#050C12', 365)
+  }
+  //火星
+  function Mars() {
+    Star.call(this, 0, -200, 10, '#CEC9B6', '#76422D', 686.98)
+  }
+  //木星
+  function Jupiter() {
+    Star.call(this, 0, -250, 10, '#C0A48E', '#322222', 4332.589)
+  }
+
+  //土星
+  function Saturn() {
+    Star.call(this, 0, -300, 10, '#F7F9E3', '#5C4533', 10759.5)
+  }
+  //天王星
+  function Uranus() {
+    Star.call(this, 0, -350, 10, '#A7E1E5', '#19243A', 30799)
+  }
+  //海王星
+  function Neptune() {
+    Star.call(this, 0, -400, 10, '#0661B2', '#1E3B73', 60152)
+  }
+  //水星对象
+  var mercury = new Mercury();
+  //金星对象
+  var venus = new Venus();
+  //地球对象
+  var earth = new Earth();
+  //火星对象
+  var mars = new Mars();
+  //木星对象
+  var jupiter = new Jupiter();
+  //土星对象
+  var saturn = new Saturn();
+  //天王星对象
+  var uranus = new Uranus();
+  //海王星对象
+  var neptune = new Neptune();
+  var drawStars = function () {
+    cxt.clearRect(0, 0, 1000, 1000);
+    drawTrack();
+    sun.draw();
+    mercury.draw();
+    venus.draw();
+    earth.draw();
+    mars.draw();
+    jupiter.draw();
+    saturn.draw();
+    uranus.draw();
+    neptune.draw();
+  };
+  drawStars();
+  setInterval(drawStars,10);
+
+</script>
+</body>
+</html>

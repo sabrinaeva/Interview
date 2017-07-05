@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>时钟</title>
+</head>
+<body>
+<canvas width="300" height="300" id="clock" style="border: solid 1px black">
+  您的浏览器不支持canvas标签
+</canvas>
+<script type="text/javascript">
+  var clock = document.getElementById('clock');
+  var cxt = clock.getContext('2d');
+
+  //现在的时间是反的
+ var drawClock = function () {
+   //清除画布
+   cxt.clearRect(0,0,300,300);
+   //动起来
+   var now = new Date();//时间对象
+   var sec = now.getSeconds();
+   var min = now.getMinutes();
+   var hour = now.getHours();
+   //问题：时间格式 24小时还是12小时;
+   //24小时进制转换成12小时,并且小时必须是浮点说
+   hour = hour>12 ? hour-12 : hour;
+   hour = hour + min / 60;
+   //表盘（蓝色）
+   cxt.beginPath();
+   cxt.arc(150,150,100,0,360,false);
+   cxt.strokeStyle= 'blue';
+   cxt.lineWidth=4;
+   cxt.stroke();
+   cxt.closePath();
+   //刻度
+   //时刻度 有12个用for循环
+   for(var i = 0; i<12; i++){
+     cxt.save();
+     cxt.translate(150,150);//先设置0,0 点
+     //设置旋转角度
+     cxt.rotate(30*i*Math.PI/180);
+     cxt.lineWidth =5;
+     cxt.strokeStyle = 'black';
+     cxt.beginPath();
+     cxt.moveTo(0,-80);
+     cxt.lineTo(0,-95);
+     cxt.closePath();
+     cxt.stroke();
+     cxt.restore();
+   }
+   //分刻度
+   for(var i =0; i<60 ;i++){
+     cxt.save();
+     cxt.lineWidth=2;
+     cxt.strokeStyle = 'black';
+     cxt.translate(150,150);
+     cxt.rotate(6*i*Math.PI/180);
+     cxt.beginPath();
+     cxt.moveTo(0,-90);
+     cxt.lineTo(0,-95);
+     cxt.closePath();
+     cxt.stroke();
+     cxt.restore();
+   }
+   //时针
+   cxt.save();
+   cxt.translate(150,150);
+   cxt.rotate(hour*30*Math.PI/180);
+   cxt.strokeStyle = 'black';
+   cxt.lineWidth = 5;
+   cxt.beginPath();
+   cxt.moveTo(0,10);
+   cxt.lineTo(0,-50);
+   cxt.closePath();
+   cxt.stroke();
+   cxt.restore();
+   //分针
+   cxt.save();
+   cxt.translate(150,150);
+   cxt.rotate(min*6*Math.PI/180);
+   cxt.strokeStyle = 'black';
+   cxt.lineWidth = 4;
+   cxt.beginPath();
+   cxt.moveTo(0,10);
+   cxt.lineTo(0,-70);
+   cxt.closePath();
+   cxt.stroke();
+   cxt.restore();
+   //秒针
+
+   cxt.save();
+   cxt.translate(150,150);
+   cxt.rotate(sec*6*Math.PI/180);
+   cxt.strokeStyle = 'red';
+   cxt.lineWidth = 2;
+   cxt.beginPath();
+   cxt.moveTo(0,20);
+   cxt.lineTo(0,-78);
+   cxt.closePath();
+   cxt.stroke();
+
+   //中心圆
+   cxt.beginPath();
+   cxt.arc(0,0,4,0,360,false);
+   cxt.fillStyle='black';
+   cxt.strokeStyle='red';
+   cxt.lineWidth=2;
+   cxt.fill();
+   cxt.closePath();
+   cxt.stroke();
+
+   //秒针圆
+   cxt.beginPath();
+   cxt.arc(0,-70,4,0,360,false);//设置坐标的时候记得向上是负，把秒针圆写在秒针的旋转里面
+   cxt.fillStyle='black';
+   cxt.strokeStyle='red';
+   cxt.lineWidth=2;
+   cxt.fill();
+   cxt.closePath();
+   cxt.stroke();
+   cxt.restore();
+ };
+
+  //动起来要使用setInterval()函数,
+
+  drawClock();
+  setInterval(drawClock, 1000);
+
+
+</script>
+</body>
+</html>
