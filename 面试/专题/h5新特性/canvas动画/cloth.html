@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>foot</title>
+</head>
+<body>
+  <canvas width="500px" height="500px" id="canvas" style="border: solid 1px black; margin: 0 auto;" ></canvas>
+</body>
+<script type="text/javascript">
+  var canvas = document.getElementById('canvas');
+  var cxt = canvas.getContext('2d');
+  cxt.beginPath();
+  var img = new Image();
+  img.src = 'images/football.jpg';
+  cxt.drawImage(img,0,0,500,500);
+
+</script>
+</html>

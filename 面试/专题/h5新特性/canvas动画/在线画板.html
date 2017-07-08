@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>在线画板</title>
+  <link rel="stylesheet" href="./css/drawBoard.css">
+</head>
+<body>
+  <header id="top">
+HTML5在线画板
+  </header>
+  <section id="content">
+    <!--工具区-->
+    <ul id="tool">
+      <li>
+        <h3>图像</h3>
+        <hr/>
+        <ul>
+          <li id="save" class="image"><button onclick="saveBorad()">保存图片</button></li>
+          <li id="clear" class="image"><button onclick="clearBorad()">清除画板</button></li>
+        </ul>
+      </li>
+      <li>
+        <h3>工具</h3>
+        <hr/>
+        <ul id="means">
+          <li id="means_brush" onclick="drawBrush(0)"><img src="images/Brush.png"></li>
+          <li id="means_eraser" onclick="drawEraser(1)"><img src="images/Eraser.png"></li>
+          <li id="means_paint" onclick="drawPaint(2)"><img src="images/Paint.png"></li>
+          <li id="means_text" onclick="drawtext(3)"><img src="images/text.png"></li>
+          <li id="means_straw" onclick="drawStraw(4)"><img src="images/Straw.png"></li>
+          <li id="means_magnifier" onclick="drawMagnifier(5)"><img src="images/Magnifier.png"></li>
+        </ul>
+      </li>
+      <li>
+        <h3>形状</h3>
+        <hr/>
+        <ul id="shape">
+          <li id="shape_line" onclick="drawline(6)"><img src="images/line.png"></li>
+          <li id="shape_arc" onclick="drawarc(7)"><img src="images/arc.png"></li>
+          <li id="shape_rect" onclick="drawrect(8)"><img src="images/rect.png"></li>
+          <li id="shape_poly" onclick="drawpoly(9)"><img src="images/poly.png"></li>
+          <li id="shape_arcfill" onclick="drawarcfill(10)"><img src="images/arcfill.png"></li>
+          <li id="shape_rectfill" onclick="drawrectfill(11)"><img src="images/rectfill.png"></li>
+        </ul>
+      </li>
+      <li>
+        <h3>宽度</h3>
+        <hr/>
+        <ul id="size">
+          <li id="size_1" onclick="setLineWidth(0)"><img src="images/line1px.png"></li>
+          <li id="size_3" onclick="setLineWidth(1)"><img src="images/line3px.png"></li>
+          <li id="size_5" onclick="setLineWidth(2)"><img src="images/line5px.png"></li>
+          <li id="size_8" onclick="setLineWidth(3)"><img src="images/line8px.png"></li>
+        </ul>
+      </li>
+      <li>
+        <h3>颜色</h3>
+        <hr/>
+        <ul id="color">
+          <li id="red"  onclick="setColor(this, 0)" style="background-color: red"></li>
+          <li id="green"  onclick="setColor(this, 1)" style="background-color: green"></li>
+          <li id="blue"  onclick="setColor(this, 2)" style="background-color: blue"></li>
+          <li id="yellow" onclick="setColor(this, 3)" style="background-color: yellow"></li>
+          <li id="white"  onclick="setColor(this, 4)" style="background-color: white"></li>
+          <li id="black" onclick="setColor(this, 5)" style="background-color: black"></li>
+          <li id="pink"  onclick="setColor(this, 6)" style="background-color: pink"></li>
+          <li id="purple" onclick="setColor(this, 7)" style="background-color: purple"></li>
+          <li id="cyan" onclick="setColor(this, 9)" style="background-color: cyan"></li>
+          <li id="orange" onclick="setColor(this, 9)" style="background-color: orange"></li>
+        </ul>
+      </li>
+    </ul>
+
+    <!--绘图区-->
+    <canvas width="880px" height="400px" id="drawBoard">不支持</canvas>
+  </section>
+  <footer id="bottom">
+  </footer>
+  </body>
+<script type="text/javascript" src="js/drawBorad.js">
+</script>
+</html>
