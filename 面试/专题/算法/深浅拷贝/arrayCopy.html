@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>数组的浅拷贝</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+  //数组的浅拷贝可以使用数组自带的一些方法 slice concat
+ //我们把这种复制引用的拷贝方法称之为浅拷贝，与之对应的就是深拷贝，
+  // 深拷贝就是指完全的拷贝一个对象，即使嵌套了对象，两者也相互分离，修改一个对象的属性，也不会影响另一个。
+
+
+  var arr = ['odd',1, true, null, undefined, {m:2}];
+
+  var new_arr = new arr.concat();
+
+  arr[4].m = 3;
+  console.log(arr); //m=3 拷贝了引用，所以old的值变了，新的也会变。
+  console.log(new_arr);//m = 3;
+
+  //以上是利用先用的方法：以下想想如何实现对象或者数组的浅拷贝：遍历把属性和对应的值放入新的就行了
+
+  var shallowCopy = function (obj) {
+    if(typeof obj !='object') return;
+    var newObj = obj instanceof Array ?[] :{};
+    //也可以用es5 的isArray
+//    Array.isArray(obj) ? [] :{};
+
+    for(var key in obj){
+      if(obj.hasOwnProperty(key)){
+        newObj[key] = obj[key];
+      }
+    }
+    return newObj;
+  }
+
+
+</script>
+</html>

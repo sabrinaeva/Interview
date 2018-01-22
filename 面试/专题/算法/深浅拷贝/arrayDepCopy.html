@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>数组深拷贝</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+  var arr = ['old', 1, true, ['old1', 'old2'], {old: 1}];
+  var arr2 = ['old', 1, true, ['old1', 'old2'], {old: 1}, function () {
+    alert('我是函数')
+  }];
+
+  //简单粗暴的方法: 不能拷贝函数
+  var new_arr = JSON.parse(JSON.stringify(arr));
+  var new_arr2 = JSON.parse(JSON.stringify(arr2));//由函数的new_arr2[5] = null
+
+  //递归
+
+  var deepCopy = function (obj) {
+    if(typeof obj !='object') return;
+    var newObj = Array.isArray(obj) ? [] : {};
+    for(var key in obj){
+      if(obj.hasOwnProperty(key)){
+        newObj[key] = typeof obj[key] === 'object' ? deepCopy(obj[key]) : obj[key]
+      }
+    }
+    return newObj;
+
+  }
+
+  //
+
+</script>
+</html>
