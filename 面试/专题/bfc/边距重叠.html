@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>边距重叠</title>
+  <style>
+    html *{
+      margin-top: 0px;
+      padding: 0px;
+    }
+  </style>
+</head>
+<body>
+统一的解决方案；设置padding或者border  或者触发BFC
+情况一、块级父元素与第一个或者最后一个子元素（父元素不存在上边框、上内边距、内联元素、清除浮动）。
+即这个父元素对外展现出来的外边距将直接变成这个父元素和其第一个子元素的margin-top的较大者。
+父元素的高度：100 或者110 都对.没有家overflow: hidden的时候父边距和字边距重叠了，父的高度只有100.加了overflow: hidden，
+父成了新的bfc,就解决了边距重叠的现象margin-top 没有塌陷进去，所以父的高度是110px;
+
+<section id="parentAndChild">
+  <style>
+    .parent {
+      background-color: red;
+      /*overflow: hidden;*/
+    }
+    .child {
+      height: 100px;
+      margin-top: 10px;
+      background-color: yellow;
+    }
+
+  </style>
+  <div class="parent">
+    <div class="child"></div>
+  </div>
+</section>
+----------------------------------------------------------------------------------
+情况二、相邻兄弟姐妹元素
+两个div的边距是50px 而不是90，去了最大值，若为负值，则去绝对值最大的，若仪征一负，则去两者的和
+<section >
+  <style>
+    .left{
+      height: 100px;
+      margin-bottom: 50px;
+      background-color: red;
+    }
+    .right{
+      height:100px;
+      background-color: blue;
+      margin-top: 40px;
+    }
+  </style>
+  <div class="left"></div>
+  <div class="right"></div>
+</section>
+
+---------------------------------------------
+三、空块元素  如果存在一个空的块级元素， border、 padding、 inline content 、height 、min-height 都不存在，
+那么上下边距居中将没有任何阻碍，上下边距将合并。取值规则与上一样
+
+<section>
+  <p style="margin-bottom: 0px;">这个段落的和下面段落的距离将为20px</p>
+
+  <div style="margin-top: 20px; margin-bottom: 50px;"></div>
+
+  <p style="margin-top: 0px;">这个段落的和上面段落的距离将为20px</p>
+</section>
+</body>
+<script type="text/javascript">
+
+</script>
+</html>

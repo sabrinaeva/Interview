@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BFC使用场景和解决的问题</title>
+  <style>
+    html *{
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+使用场景一、自适应两栏布局 (规则1)
+<section>
+  <style>
+    .left{
+      width: 100px;
+      float:left;
+      height: 100px;
+      background-color: yellow;
+    }
+    .right{
+      height: 150px;
+      background-color: red;
+      overflow: hidden;
+    }
+  </style>
+  <div class="left"></div>
+  <div class="right"></div>
+</section>
+
+场景二、清除内部浮动
+<section>
+  <style>
+    .par{
+      border:5px solid red;
+      width:1000px;
+      overflow: hidden;//生成BFC，把浮动元素的高度计算在内，变相地清除了内部浮动
+    }
+    .child{
+      border: 5px solid blue;
+      float: left;
+      height:100px;
+      width: 100px;
+    }
+  </style>
+  <div class="par">
+    <div class="child"></div>
+    <div class="child"></div>
+  </div>
+</section>
+
+场景三、边距重叠(BFC中子元素边距重叠)
+两个div 中间取了最大值30为重叠了，在p外面包裹一层容器，并触发该容器生成一个BFC。
+那么两个P便不属于同一个BFC，就不会发生margin重叠了
+<section>
+  <style>
+    .wrap{
+      overflow: hidden;
+    }
+    .top{
+      height: 100px;
+      margin-bottom: 40px;
+      background-color: red;
+    }
+    .bottom{
+      height: 100px;
+      margin-top: 30px;
+      background-color:blue;
+    }
+  </style>
+  <p class="top"></p>
+  <div class="wrap">
+    <p class="bottom"></p>
+  </div>
+</section>
+
+总结：因为BFC内部的元素和外部的元素绝对不会互相影响，因此， 当BFC外部存在浮动时，它不应该影响BFC内部Box的布局，BFC会通过变窄，而不与浮动有重叠。同样的，当BFC内部有浮动时，
+为了不影响外部元素的布局，BFC计算高度时会包括浮动的高度。避免margin重叠也是这样的一个道理。
+</body>
+<script type="text/javascript">
+
+</script>
+</html>
