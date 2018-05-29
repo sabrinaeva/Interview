@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Es6--promise</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+
+  var promise = new Promise(function (resolve, reject) {
+    resolve('value')//23作为value值会传递到.then
+    reject('error')
+  })
+  promise.then(function (value) {
+    //success
+  },function (error) {
+    //failure
+  })
+
+  //promise 实现Ajax
+
+  const getJSON = function (url) {
+    const pAjax = new Promise(function (resolve, reject) {
+      const  handler = function () {
+        if(this.readyState !=4){
+          return
+        }
+        if(this.status ===200){
+          resolve(this.response)
+        }else{
+          reject(new Error(this.statusText))
+        }
+      }
+      var xhr = new XMLHttpRequest();
+      xhr.url = url;
+      xhr.open('GET', url);
+      xhr.onreadystatechange = handler;
+      xhr.responseType='json';
+      xhr.setRequestHeader('Accept','application/json');
+      xhr.send();
+    });
+
+    pAjax.then(function (json) {
+      console.log('内容是：'+json)
+    }, function (error) {
+      console.log('出错了：'+error)
+
+    })
+  }
+
+  const p1 = new Promise(function (resolve, reject) {
+    setTimeout(()=>reject(new Error('failuer')),3000);
+  })
+
+  const p2 = new Promise(function (resolve, reject) {
+    setTimeout(()=> resolve(p1),4000)
+  })
+
+  p2.then(result => console.log(result))
+      .catch(error=>console.log(error))
+
+  /**
+   * promise 的方法：.then
+   */
+  new Promise(function (resolve, reject) {
+
+  }).then(function(){}/**resolve的回调函数*/,function () {}/**reject的回调函数*/)
+      .catch()/**是.then(null, rejection)的别名，用于指定发生错误时的回调*/
+      .finally()/**指定无论状态如何都会执行，关掉服务器*/
+      .all([p1,p2,p3])/**将多个Promise实例，包装成一个新的Promise实例,参数可以不是数组，但必须有Iterator借口
+                        ，且返回的每个成员都是Promise实例，只有全部为fulfilled,才会是fullfilled，其他均为rejected*/
+      .race([p1,p2,p3])/**其中一个状态改变，结果就会跟着改变，与all()方法有点像 || &&*/
+      .resolve()/**讲对象转为一个新的Promise对象*/
+      .reject()/**返回一个新的Promise对象，状态为rejected*/
+</script>
+</html>

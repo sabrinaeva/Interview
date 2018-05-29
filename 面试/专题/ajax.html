@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ajax</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+  var xhr;
+  if(Window.XMLHttpRequest){
+     xhr = new XMLHttpRequest();
+  }else{
+//    IE7 以下的IE
+     xhr = new ActiveXObject('Microsoft.XMLHTTP');
+  }
+
+  xhr.open('get', 'www.baidu.com', true);
+//  setRequestHeader(header, value);
+  xhr.setRequestHeader("Context-type", "application/x-www-form-ur");//添加http头
+  //将请求发送到服务器，里面的参数仅用于post，用于传送数据的
+  xhr.send('string');
+
+//  若是异步的话就需要使用到 xhr.onreadystatechange事件，当readyState改变的时候，会触发
+
+//  readyState 0->请求未初始化  1->服务器链接已经建立  2-> 请求已接受  3->请求处理中 4->请求处理完成，且响应已经就绪
+
+//  status  200->OK 404-》未找到页面
+
+  xhr.onreadystatechange = function () {
+    //被触发5次
+    if(xhr.readyState == 4 && xhr.satus ==200){
+      //请求成功，做事情
+      xhr.responseText
+    }
+  }
+
+//  xhr.responseText  返回的是字符串形式的响应
+//  xhr.responseXML 响应的是XML，而且需要作为xml对象解析
+
+
+  function createXHR() {
+    if(window.XMLHttpRequest){
+      return new XMLHttpRequest()
+    }else {
+      return new ActiveXObject();
+    }
+  }
+
+  var xmlr = createXHR();
+  xmlr.timeout = 1000;//讲超时设置成1妙 仅IE8+
+
+  xmlr.ontimeout = function () {
+
+  };
+
+/*
+  跨域技术：
+  1、JSONP
+  2、Hash
+  3、PostMessage
+  4、webScoket
+  5、CORS
+*/
+
+  //webSockets 同源策略对它不适用
+  var ws = new WebSocket('ws://www.example.com');//这个语句之后，客户端就会和服务器进行连接
+  ws.readyState = WebSocket.CONNECTING
+  ws.readyState =WebSocket.OPEN
+
+  ws.onopen = function (event) {  }//连接成功后的回调函数
+  //若多个回调函数可以使用addEventListener
+
+  ws.addEventListener('open', function () {
+
+  })
+
+  ws.onerror = function (event) {  }//
+  ws.onclose= function (p1) {  }
+  ws.onmessage = function (event) {
+    var data = event.data; //处理数据
+    }
+
+    ws.send('something');//向服务器发送数据
+
+</script>
+</html>

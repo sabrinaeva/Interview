@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>事件</title>
+</head>
+<body>
+<h1 id="test">测试</h1>
+
+</body>
+<script type="text/javascript">
+//自定义事件 var event  = document.createevent();//过时了
+  var event = new Event('cc');
+  var person = {name:'dd'}
+  var custom = new CustomEvent('dd', {"detail":{'name':"sdfd"}});
+  var test = document.getElementById('test');
+debugger
+  test.addEventListener('cc', function () {
+    console.log('cc时间')
+  });
+  test.addEventListener('dd', function (e) {
+    debugger
+    e.detail//获得传过来的参数
+    console.log('dd事件')
+  });
+
+  test.dispatchEvent(event);
+  test.dispatchEvent(custom);
+
+ function loadEvent(fn) {
+   var oldFn = window.onload;
+   if(typeof window.onload != 'function'){
+     window.onload = fn
+   }else{
+     window.onload= function () {
+       oldFn();
+       fn();
+     }
+   }
+ }
+
+
+// 浏览器兼容事件处理
+
+  var EventUntils = {
+   addHandler:function (element, type, handler) {
+     if(element.addEventListener){
+       element.addEventListener(type, handler, false)
+     }else if (element.attachEvent){
+       element.attachEvent('on'+type, handler)
+     }else {
+       element['on'+ type] = handler;
+     }
+   },
+    removeHandler :function (element, type, handler) {
+      if(element.removeEventListener){
+        element.removeEventListener(type, handler, false)
+      }else if(element.detachEvent){
+        element.detachEvent('on'+type, handler)
+      }else{
+        element['on'+type] = null
+      }
+    },
+
+    //阻止冒泡
+    stopPropagation:function (event) {
+     if(event.stopPropagation){
+       event.stopPropagation();//可同时取消冒泡和捕获
+     }else{
+       event.cancelBubble = true;//IE只支持冒泡
+     }
+
+    },
+    preventDefault:function (event) {
+     if(event.preventDefault){
+       event.preventDefault();
+     } else{
+       event.returnValue =false;
+     }
+    },
+
+    getTarget :function (event) {
+      return event.target || event.srcElement
+    },
+    getEvent: function (event) {
+     return event || window.event;
+    }
+  }
+</script>
+</html>

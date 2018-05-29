@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    div{
+      border: solid 1px red;
+    }
+  </style>
+</head>
+<body>
+
+垂直居中方式一、flex
+<section id="way_1">
+  <style>
+   #way_1 .wrapper{
+      border:solid 1px red;
+      width: 100px;
+      height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+   #way_1 .item{
+      border:solid 1px black;
+      width: 50px;
+      height: 30px;
+    }
+
+  </style>
+  <div class="wrapper">
+    <div class="item">
+    </div>
+  </div>
+</section>
+
+垂直居中方式2,绝对定位，缺点 需要知道item的宽高
+<section id="way_2">
+  <style>
+    #way_2 .wrapper{
+      border:solid 1px red;
+      width: 100px;
+      height: 100px;
+     position: relative;
+    }
+    #way_2 .item{
+      border:solid 1px black;
+      width: 50px;
+      height: 30px;
+      position: absolute;
+      top:50%;
+      left: 50%;
+      margin-left: -25px;
+      margin-top: -15px;
+    }
+
+  </style>
+  <div class="wrapper">
+    <div class="item">
+    </div>
+  </div>
+</section>
+垂直居中方式3，table
+<section id="way_3">
+  <style>
+    #way_3 .wrapper{
+      border:solid 1px red;
+      width: 100px;
+      height: 100px;
+      display: table;;
+    }
+    #way_3 .item{
+      border:solid 1px black;
+      width: 50px;
+      height: 30px;
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+  </style>
+  <div class="wrapper">
+    <div class="item">jasdfasdfadsf
+    </div>
+  </div>
+</section>
+
+垂直居中方式4，绝对定位
+<section id="way_4">
+  <style>
+    #way_4 .wrapper{
+      border:solid 1px red;
+      width: 100px;
+      height: 100px;
+      position: relative;
+    }
+    #way_4 .item{
+      border:solid 1px black;
+      width: 50px;
+      height: 30px;
+      position: absolute;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      margin: auto;
+    }
+
+  </style>
+  <div class="wrapper">
+    <div class="item">
+    </div>
+  </div>
+</section>
+
+垂直居中方式5，绝对定位和css3
+<section id="way_5">
+  <style>
+    #way_5 .wrapper{
+      border:solid 1px red;
+      width: 100px;
+      height: 100px;
+      position: relative;
+    }
+    #way_5 .item{
+      border:solid 1px black;
+      width: 50px;
+      height: 30px;
+      position: absolute;
+      top:50%;
+      left:50%;
+     transform: translate(-50%, -50%);
+    }
+
+  </style>
+  <div class="wrapper">
+    <div class="item">
+    </div>
+  </div>
+</section>
+table table-cell 实现垂直居中
+<style type="text/css" rel="stylesheet">
+  .table {
+    display: table;
+    margin: 5px;
+    width: 500px;
+    height: 300px;
+    background-color: #ccc;
+  }
+
+  .cell {
+    display: table-cell;
+    padding: 10px;
+    vertical-align: middle;/*该属性是定义行内元素垂直对齐的，只有行内元素会生效。在表单元格中，这个属性会设置单元格框中的单元格内容的对齐方式。*/
+  }
+</style>
+<div class="table">
+  <div class="cell">内容内容内容内容内容内内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>
+</div>
+</body>
+<script type="text/javascript">
+
+  /**
+   * 垂直居中的方式
+   * 1 flex
+   * .wrapper{
+      border:solid 1px red;
+      width: 100px;
+      height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+   .item{
+      border:solid 1px black;
+      width: 50px;
+      height: 30px;
+    }
+
+   *
+   * */
+
+//  1、flex
+
+
+</script>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>设计模式---单例模式</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+
+  //实现1
+  var Sigleton = function (name) {
+    this.name = name;
+    this.instance = null;
+  }
+  Sigleton.prototype.getName = function () {
+    alert(this.name)
+  }
+  Sigleton.getInstance = function (name) {
+    if(!this.instance){
+      this.instance = new Sigleton(namesToPlugins)
+    }
+    return this.instance;
+
+  }
+
+  //实现2
+
+  var Sigleton = function (name) {
+    this.name = name;
+  };
+  Sigleton.prototype.getName = function () {
+    alert(this.name)
+  }
+  Sigleton.getInstance = (function () {
+    var instance = null;
+    return function (name) {
+      if(!instance){
+        instance = new Sigleton(name);
+      }
+      return instance
+    }
+  })();
+  /**
+  问题：方法1和2增加了这个类的不透明性,使用这个类的人必须知道这个是单例类，跟以往通过
+  new的方式获得对象不同，这里需要使用getInstance来获取对象
+  */
+
+  /**
+  方法三：透明的单例
+  问题：使用了自执行的匿名函数和闭包，并且让这个匿名函数返回了真正的Sigleton构造方法
+  增加了复杂读,违反设计原则“单一职责”
+  */
+  var CreateDiv = (function () {
+    var instance;
+    var CreateDiv = function (html) {
+      if(instance){
+        return instance
+      }
+      this.html = html;
+      this.init();
+      return instance = this;
+    }
+    CreateDiv.prototype.init = function () {
+      var div = document.createElement('div');
+      div.innerHTML = this.html;
+      document.body.appendChild(div)
+    };
+
+    return CreateDiv;
+  })();
+
+  var a = new CreateDiv('a111')
+  var b = new CreateDiv('b2222')
+
+  /**
+   * 方法4：用代理实现单例
+   * CreateDiv变成了普通的类，把负责管理单例的逻辑移到了代理类中，
+   * 两者相结合达到了单例模式的效果
+   */
+  var CreateDiv = function (html) {
+    this.html = html;
+    this.init();
+  }
+  CreateDiv.prototype.init = function () {
+    var div = document.createElement('div');
+    div.innerHTML = this.html;
+    document.body.appendChild(div)
+  };
+
+      //  ==>引入代理
+  var ProxySigletonCreateDiv = (function () {
+    var instance;
+    return function (html) {
+      if(!instance){
+        instance = new CreateDiv(html)
+      }
+      return instance
+    }
+  })();
+
+  /**
+   * 以上方法有点接近与面向对象的实现，而js是无类的语言，在js中创建对象很简单
+   * ，单例模式的核心是确保只有 一个实例，并提供全局访问。，即可以声明为全局变量
+   * 但是要注意变量污染，使用命名空间或闭包
+   */
+
+
+  /**
+   * 惰性单例：指的是在需要的时候才创建对象的实例（单例模式的重点****）
+   * 把创建实例对象的职责和管理单例的职责分别放置在两个方法里，两个方法相互独立不影响.
+   *
+   */
+
+  var getSingle = function (fn) {
+    //result 来保存fn的计算结果，因为result在闭包中，永远不会被销毁，
+    //在将来的请求中，如果result已经赋值那么就返回这个值
+    var result;
+    return function () {
+      return result || (result = fn.apply(this, arguments))
+    }
+  }
+
+  var createLoginLayer = function () {
+    var div = document.createElement('div');
+    div.innerHTML = 'sf';
+    div.style.display = 'none'
+    document.body.appendChild(div);
+    return div;
+  }
+  var sigleDiv = getSingle(createLoginLayer);
+
+  var createSigleIframe = getSingle(function () {
+    var iframe = document.createElement('iframe');
+    document.body.appendChild(iframe);
+    return iframe;
+  })
+
+  /**
+   * 单例模式的用途：1、上面的那样创建对象
+   *  2、事件绑定
+   */
+  var bindEvent = getSingle(function(){
+    document.getElementById( 'div1' ).onclick = function(){
+      alert ( 'click' );
+    }
+    return true;
+  });
+  var render = function(){
+    console.log( '开始渲染列表' );
+    bindEvent();
+  };
+  render();
+  render();
+  render();
+  /**
+   * 可以看到，render 函数和 bindEvent 函数都分别执行了 3 次，但 div 实际上只被绑定了一个
+  事件。
+   */
+
+</script>
+</html>

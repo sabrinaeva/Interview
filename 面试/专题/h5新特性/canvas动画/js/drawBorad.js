@@ -212,7 +212,7 @@ var drawarcfill =  function (num) {
     var endX = evt.pageX - this.offsetLeft;
     var endY = evt.pageY - this.offsetTop;
     var x = endX-arcX;
-    var y = endY-arcY
+    var y = endY-arcY;
     var z = Math.sqrt(x*x +y*y);
     cxt.beginPath();
     cxt.arc(arcX, arcY, z, 0, 360, false);

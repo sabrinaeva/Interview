@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>UniqueInOrder</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+
+  /**
+   * Implement the function unique_in_order which takes as argument a sequence and returns a list of items without any elements with
+      the same value next to each other and preserving the original order of elements.
+      forExample:
+      uniqueInOrder('AAAABBBCCDAABBB') == ['A', 'B', 'C', 'D', 'A', 'B']
+      uniqueInOrder('ABBCcAD')         == ['A', 'B', 'C', 'c', 'A', 'D']
+      uniqueInOrder([1,2,2,3,3])       == [1,2,3]
+   */
+  var uniqueInOrder=function(iterable){
+    //your code here - remember iterable can be a string or an array
+    var arr = [];
+    if(iterable instanceof Array){
+    }else if(typeof  iterable == 'string'){
+      iterable = iterable.split('')
+    }
+    var oldvalue = iterable[0];
+    arr.push(oldvalue);
+    for(var i = 1; i<iterable.length; i++){
+      if(oldvalue !=iterable[i]){
+        oldvalue = iterable[i];
+        arr.push(oldvalue)
+      }
+    }
+    return arr;
+  }
+
+  var t = uniqueInOrder('AAAABBBCCDAABBB')
+  var s = uniqueInOrder([1,2,2,3,3])
+  console.log(s);
+
+</script>
+</html>

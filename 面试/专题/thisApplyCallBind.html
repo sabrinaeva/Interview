@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>this-apply-call-bind</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+/*  用apply实现bind
+  1、bind用于绑定this指向
+  2、bind使用语法 fun.bind(thisArg[, arg1 [, arg2 [, ...]]])
+    bind会创建一个新的函数，当新的函数被调用时，bind的第一个参数将作为它它运行时的this,之后的
+    一序列参数将会在传递的实参前传入它的参数
+  3、bind返回的绑定函数也能使用new操作符来创建对象：这种行为就像把原函数当做构造器，提供的this
+    值被忽略，同时调用时的参数讲提供给模拟函数
+    */
+//初级实现
+  Function.prototype.binda = function (oThis) {
+    debugger
+    var me = this;
+    var args = Array.prototype.slice.call(arguments);//arguments是所有非箭头函数里面都有的局部变量，是个类数组，所以需要转变成真的数组。
+    //转变方法有上面的 再加上 [].slice.call(arguments)  Array.form(arguments)  Array.apply(null, arguments)
+    return function () {
+      return me.apply(oThis, args.slice(1))
+
+    }
+  }
+
+  var ff = function (arg) {
+    debugger
+    console.log(this.name+"____>"+arg);
+  }
+  var a = {
+    name: 'aaa'
+  }
+
+//  ff.binda(a,1,2,3,4)()
+
+  Function.prototype.bindb = function (oThis) {
+    var me = this
+    var args = Array.prototype.slice.call(arguments , 1);
+    return function () {
+      var innerArgs = Array.prototype.slice.call(arguments);
+      var finalArgs = args.concat(innerArgs);
+      return me.apply(oThis, finalArgs)
+    }
+  }
+//  ff.bindb(a, 1,2,3,4)();
+
+  //MDN实现
+
+//if (!Function.prototype.bind) {
+  Function.prototype.bindMDN = function (oThis) {
+    debugger
+    if (typeof this !== "function") {
+      // closest thing possible to the ECMAScript 5 internal IsCallable function
+      throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+    }
+
+    var aArgs = Array.prototype.slice.call(arguments, 1),
+        fToBind = this,
+        fNOP = function () {},
+        fBound = function () {
+          return fToBind.apply(this instanceof fNOP && oThis
+              ? this
+              : oThis,
+              aArgs.concat(Array.prototype.slice.call(arguments)));
+        };
+
+    fNOP.prototype = this.prototype;
+    fBound.prototype = new fNOP();
+
+    return fBound;
+  };
+//}
+ var t = ff.bindMDN(a,1,2,3)
+  debugger
+
+var Empty = function Empty() {};
+isCallable = function isCallable(value) {
+  if (!value) {
+    return false;
+  }
+  if (typeof value !== 'function' && typeof value !== 'object') {
+    return false;
+  }
+  if (hasToStringTag) {
+    return tryFunctionObject(value);
+  }
+  if (isES6ClassFn(value)) {
+    return false;
+  }
+  var strClass = to_string.call(value);
+  return strClass === fnClass || strClass === genClass;
+};
+
+function bind(that) {
+  var target = this;
+  if (typeof target !=='function') {
+    throw new TypeError('Function.prototype.bind called on incompatible ' + target);
+  }
+
+  var args = Array.prototype.slice.call(arguments, 1); // for normal call.
+  var bound;
+  var binder = function () {
+
+    if (this instanceof bound) {
+      var result = Function.prototype.apply.call(
+          target,
+          this,
+          Array.prototype.concat.call(args, Array.prototype.slice.call(arguments))
+      );
+      if (Object(result) === result) {
+        return result;
+      }
+      return this;
+
+    } else {
+      return Function.prototype.apply.call(
+          target,
+          that,
+          Array.prototype.concat.call(args, Array.prototype.slice.call(arguments))
+      );
+    }
+
+  };
+  var boundLength = Math.max(0, target.length - args.length);
+
+  var boundArgs = [];
+  for (var i = 0; i < boundLength; i++) {
+    Array.prototype.push.call(boundArgs, '$' + i);
+  }
+  bound = Function('binder', 'return function (' + Array.prototype.join.call(boundArgs, ',') + '){ return binder.apply(this, arguments); }')(binder);
+  if (target.prototype) {
+    Empty.prototype = target.prototype;
+    bound.prototype = new Empty();
+    // Clean up dangling references.
+    Empty.prototype = null;
+  }
+
+  return bound;
+}
+
+var a = Function.prototype.call.apply(function (a) {
+  return a;
+}, [0, 4, 3]);
+//alert(a);
+/*
+Function.prototype.call.apply(log,[console, arguments]);
+==>Function.prototype.cal为一个整体
+FunctionCall.apply(log, [console, arguments]);
+log.FunctionCall(console, arguments);
+console.log(arguments)
+*/
+var fun = function (a) {
+  return a
+}
+[0].fun(4);
+
+
+//var b = Function.prototype.apply.call(function (a) {
+//  return a;
+//}, 0, 4, 3);
+//alert(b);
+
+/*
+Function.prototype.apply.call(log, console, arguments);
+==>Function.prototype.apply为一个整体
+ FUnctionApply.call(log, console, arguments)
+log.FunctionApply(console, arguments)
+console.log(argments);
+*/
+
+
+</script>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>设计模式---观察者</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+
+  /**
+   * 1、可以广泛应用于异步编程中
+   * 2、取代对象之间硬编码的通知机制，一个对象不用再显式地调用另一个对象的接口
+   */
+
+  /**
+   * 应用场景：1、DOM事件 2、自定义事件
+   */
+
+  var event = {
+    clientList: [],
+    listen: function (key, fn) {
+      if(!this.clientList[key]){
+        this.clientList[key] = [];
+      }
+      this.clientList[key].push(fn);
+    },
+    trigger: function () {
+      var key = Array.prototype.shift.call(arguments),
+          fns = this.clientList[key];
+
+      if(!fns || fns.length == 0){
+        return false;
+      }
+      for(var i = 0, fn; fn=fns[i++];){
+        fn.apply(this, arguments)
+      }
+    },
+    remove: function (key, fn) {
+      var fns = this.clientList[key];
+      if(!fns){
+        return false
+      }
+      if(!fn){
+        fns && (fns.length=0)
+      }else{
+        for(var i = fns.length-1 ;i >=0; i--){
+          var _fn = fns[i];
+          if(_fn ===fn){
+            fns.splice(i,1)
+          }
+        }
+      }
+    }
+  };
+
+  var installEvent = function (obj) {
+    for(var i in event){
+      obj[i] = event[i]
+    }
+  }
+
+  var salesOffices = {};
+  installEvent(salesOffices);
+  salesOffices.listen('squareMeter88', function (price) {
+    console.log('价格='+price)
+  })
+  salesOffices.listen('squareMeter100', function (price) {
+    console.log('价格='+price)
+  })
+
+//  salesOffices.remove('squareMeter88');
+//  salesOffices.trigger('squareMeter88',22);
+//  salesOffices.trigger('squareMeter100',33);
+
+  /**
+   * 全局发布-订阅，Event作为‘中介者’的角色，把订阅者和发布者联系起来
+   */
+  var Event = (function () {
+    var clientList =[],
+        listen,
+        trigger,
+        remove;
+    listen = function (key, fn) {
+      if(!clientList[key]){
+        clientList[key]=[]
+      }
+      clientList[key].push(fn);
+    };
+    trigger = function () {
+      var key = Array.prototype.shift.call(arguments),
+          fns = clientList[key];
+      if(!fns || fns.length ===0){
+        return false;
+      }
+      for(var i = 0, fn; fn = fns[i++];){
+        fn.apply(this, arguments)
+      }
+    };
+    remove = function (key, fn) {
+      var fns = clientList[key];
+      if(!fns){
+        return false;
+      }
+      if(!fn){
+        fns&&(fns.length=0)
+      }else {
+        for(var i = fns.length-1; i>=0; i--){
+          var _fn = fns[i];
+          if(_fn === fn){
+            fns.splice(i,1)
+          }
+        }
+      }
+    };
+    return {
+      listen: listen,
+      trigger: trigger,
+      remove: remove
+    }
+  })();
+
+ //===》问题：没有离线缓存，只能订阅后发布才能收到信息，而发布后再订阅就收不到信息
+//  Event.listen('squareMeter88', function (price) {
+//    console.log('价格=' +price)
+//  });
+//  Event.trigger('squareMeter88', 3333)
+//
+
+  /**
+   * 全局事件的命名冲突
+   */
+
+  var Event = (function () {
+    var global = this,
+        Event,
+        _default = 'default';
+    Event = function () {
+      var _listen,
+          _trigger,
+          _remove,
+          _slice = Array.prototype.slice,
+          _shift = Array.prototype.shift,
+          _unshift = Array.prototype.unshift,
+          namespaceCache = {},
+          _create,
+          find,
+          each = function (arr, fn) {
+              var ret;
+              for(var i = 0, l = arr.length ; i<l ;i++){
+                var n = arr[i];
+                ret = fn.call(n, i,n);
+              }
+              return ret;
+          };
+      _listen = function (key, fn, cache) {
+        if(!cache[key]){
+          cache[key] = []
+        }
+        cache[key].push(fn);
+      };
+      _remove = function (key, cache, fn) {
+        if(cache[key]){
+          if(fn){
+            for(var i = cache[key].length; i>=0;i--){
+              if(cache[key][i] === fn){
+                cache[key].splice(i ,1);
+              }
+            }
+          }else{
+            cache[key] =[];
+          }
+        }
+
+      };
+      _trigger = function () {
+        var cache = _shift.call(arguments),
+            key = _shift.call(arguments),
+            args = arguments,
+            _self = this,
+            ret,
+            stack = cache[key];
+        if(!stack || stack.length){
+          return
+        }
+        return each(stack, function () {
+          return this.apply(_self, args)
+        })
+      };
+      _create = function (namespace) {
+        var namespace = namespace || _default;
+        var cache = {},
+            offlineStack = [],//离线事件
+            ret = {
+                listen: function (key, fn, last) {
+                  _listen(key, fn, cache);
+                  if(offlineStack === null){
+                    return
+                  }
+                  if(last ==='last'){
+                    offlineStack.length && offlineStack.pop()();
+                  }else{
+                    each(offlineStack, function () {
+                      this();
+                    });
+                  }
+                  offlineStack = null;
+                },
+              one: function (key, fn, last) {
+                _remove(key, cache);
+                this.listen(key, fn, last)
+              },
+              remove: function (key, fn) {
+                _remove(key, cache, fn)
+              },
+              trigger: function () {
+                var fn,
+                    args,
+                    _self = this;
+                _unshift.call(arguments, cache);
+                args = arguments;
+                fn = function () {
+                  return _trigger.apply(_self, args)
+                };
+                if(offlineStack){
+                  return offlineStack.push(fn);
+                }
+                return fn();
+              }
+            };
+
+        return namespace ?
+            (namespaceCache[namespace] ? namespaceCache[namespace]
+                : namespaceCache[namespace] =ret)
+            :ret;
+      };
+      return {
+        create:_create,
+        one: function (key, fn, last) {
+          var event = this.create();
+              event.one(key, fn, last);
+        },
+        remove: function (key, fn) {
+          var event = this.create();
+          event.remove(key, fn)
+        },
+        listen: function (key, fn, last) {
+          var event = this.create();
+          event.listen(key, fn, last);
+        },
+        trigger: function () {
+          var event = this.create();
+          event.trigger.apply(this, arguments);
+        }
+      }
+    }();
+      return Event;
+  })();
+
+  Event.listen('squareMeter88', function (price) {
+    console.log('价格=' +price)
+  });
+  Event.trigger('squareMeter88', 3333)
+
+</script>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+
+  class aQuery{
+    constructor(selector){
+      this.doc = document;
+      this.selector = this.doc.querySelectorAll(selector);
+    }
+    each(){
+      for(let i = 0; i<this.selector.length ;i++){
+        if(arguments[0].call(this.selector, i, this.selector[i]) == false){
+          break;
+        }
+      }
+      return this
+    }
+    on (type, fn){
+      let _this = this;
+      type = type.split(' ');
+      this.each(function (i, v) {
+        window.addEventListener ?
+          _this.selector[i].addEventListener(type[i],fn)
+          :
+          _this.selector.attachEvent('on'+type, fn);
+      });
+      return this;
+    }
+  }
+
+
+
+</script>
+</html>

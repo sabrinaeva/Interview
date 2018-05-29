@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>数组去重</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+
+  var arr = [1,1,2,3,3,NaN,NaN,null,null, undefined, undefined,3,4,4];
+
+  //es6的方式
+  function uniqueEs6(nums) {
+
+    var set = new Set(nums);
+    debugger
+    return [...set]
+  }
+
+  //对象的可枚举类型 如果有 1 和‘1’的话怎么解决   可以尝试加入 typeOf
+  function objectUnique(nums){
+    var obj={};
+    nums.forEach(function (item, index) {
+      obj[item] = 0;
+    })
+    return Object.keys(obj)
+  }
+
+  //用indexOf() 新建一个数组 的方式,两个NaN 没有识别，
+  function uniqueIndexOf(nums) {
+    var result = [];
+    nums.forEach(function (item, index) {
+      if(result.indexOf(item) == -1){
+        result.push(item)
+      }
+    })
+    return result;
+  }
+  console.log(uniqueIndexOf(arr));
+
+</script>
+</html>

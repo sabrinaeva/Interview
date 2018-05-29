@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IE6-8不支持forEach和map</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+
+  Array.prototype.MyforEach =function (callback, context) {
+    context = context || window;
+
+//    if('forEach' in Array.prototype){
+//      this.forEach(callback, context)
+//      return;
+//    }
+    for(var i = 0; i<this.length ;i++){
+      callback && callback.call(context , this[i],  this);
+    }
+  }
+
+  var arr = [1,2,3,4,5,6]
+
+  arr.MyforEach(function (e, i) {
+    debugger
+    console.log(e, i)
+  })
+
+
+  Array.prototype.myMap = function (callback, context) {
+    context = context || window;
+    var newArray = [];
+    for(var i = 0; i<this.length ;i++){
+      if(typeof callback ==='function'){
+        var val = callback.call(context, this[i], this);
+        newArray[newArray.length] = val
+      }
+    }
+    return newArray;
+  }
+
+</script>
+</html>

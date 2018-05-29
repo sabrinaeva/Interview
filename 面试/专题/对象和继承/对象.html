@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>创建对象</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+
+  /*
+  * Object.create()
+  * */
+
+  var Plane = function () {
+    this.blood=100;
+    this.attackLevel=1;
+    this.defenseLevel=1;
+  }
+  var p1 = new Plane();
+  p1.blood=500;
+  p1.attackLevel=3;
+  p1.defenseLevel=5;
+
+  var p2 = Object.create(p1);
+
+/*
+  不支持Object.create()的浏览器
+*/
+
+  Object.create = Object.create|| function (obj) {
+
+    var F = function () {}
+    F.prototype = obj;
+    return new F();
+  }
+
+/*
+  new的实现
+*/
+
+function new2(Fn) {
+  debugger
+  var o = Object.create(Fn.prototype);
+
+  var result = Fn.call(o, arguments);
+  return typeof result =='o' ? result: o
+
+}
+
+/*
+
+new 一个实例的过程执行了如下几步:
+  1、声明了一个对象
+  2、将该对象的原型指向构造函数的原型
+  3、讲构造函数中的this指向该对象
+  4、返回该对象，即返回实例对象
+*/
+
+function NEW(func) {
+  var res = {};
+  if(func.prototype != null){
+    //实例的隐式原型指向构造函数的原型
+    res.__proto__ = func.prototype;
+  }
+  var ret = func.apply(res, Array.prototype.slice.call(arguments,1));
+  if((typeof ret ==='Object' || typeof ret ==='function')&& ret!=null){
+    return ret;
+  }
+  return res;
+}
+
+  debugger
+  function ff() {
+    this.name ='fff';
+  }
+  var tt= NEW(ff);
+
+function Person(name) {
+  this.name=name
+}
+Person.prototype.getName = function () {
+  return this.name;
+}
+
+var objectFactory = function () {
+  var obj = {},
+      Constructor = [].slice.call(arguments);
+  obj.__proto__ == Constructor.prototype;//指向正确的原型
+
+  var ret = Constructor.apply( obj, arguments)//确定构造器返回一个对象;
+
+  return typeof ret =='object' ? ret: obj;
+}
+
+</script>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>谷歌日历</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css">
+  <script src="./node_modules/moment/moment.js"></script>
+  <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="./node_modules/fullcalendar/dist/fullcalendar.js"></script>
+  <script src="https://apis.google.com/js/api:client.js"></script>
+
+</head>
+<body>
+<button id="customBtn" type="button">Google登录</button>
+<div id="name"></div>
+<button type="button" onclick="signOut();">Sign out</button>
+
+<div id='calendar'></div>
+
+
+<script type="text/javascript">
+  $(function() {
+
+    var googleUser = {};
+    var startApp = function() {
+      gapi.load('auth2', function(){
+        // Retrieve the singleton for the GoogleAuth library and set up the client.
+        auth2 = gapi.auth2.init({
+          client_id: '705795768494-dqfbae2tmsjf4l8v1bl581nri163dlfd.apps.googleusercontent.com', //客户端ID
+          cookiepolicy: 'single_host_origin',
+          scope: 'profile' //可以请求除了默认的'profile' and 'email'之外的数据
+        });
+        attachSignin(document.getElementById('customBtn'));
+      });
+    };
+
+    function attachSignin(element) {
+      auth2.attachClickHandler(element, {},
+          function(googleUser) {
+            document.getElementById('name').innerText = "Signed in: " + googleUser.getBasicProfile().getName();
+            var profile = auth2.currentUser.get().getBasicProfile();
+            console.log('ID: ' + profile.getId());
+            console.log('Full Name: ' + profile.getName());
+            console.log('Given Name: ' + profile.getGivenName());
+            console.log('Family Name: ' + profile.getFamilyName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail());
+          }, function(error) {
+            console.log(JSON.stringify(error, undefined, 2));
+          });
+    }
+    startApp();
+
+    $('#calendar').fullCalendar({
+      weekends: false // will hide Saturdays and Sundays
+    });
+
+  });
+</script>
+</body>
+
+</html>

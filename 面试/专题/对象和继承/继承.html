@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>继承</title>
+</head>
+<body>
+
+
+<script type="text/javascript">
+  /**
+   * 方法一、原型链
+   */
+  //基本模式
+
+  function SuperType(){
+    this.prototype = true;
+  }
+  SuperType.prototype.getSuperValue = function () {
+    return this.prototype;
+  }
+
+  function SubType() {
+    this.subprototype = false;
+  }
+
+  //继承了SuperType
+  SubType.prototype = new SuperType();
+
+  SubType.prototype.getSubValue = function () {
+    return this.subprototype
+  }
+  var instance = new SubType();
+  alert(instance.getSuperValue) //true
+
+</script>
+</body>
+</html>

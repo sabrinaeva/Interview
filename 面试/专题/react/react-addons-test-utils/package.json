@@ -1,0 +1,63 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "react-addons-test-utils@http://registry.npm.taobao.org/react-addons-test-utils/download/react-addons-test-utils-0.14.8.tgz",
+        "scope": null,
+        "escapedName": "react-addons-test-utils",
+        "name": "react-addons-test-utils",
+        "rawSpec": "http://registry.npm.taobao.org/react-addons-test-utils/download/react-addons-test-utils-0.14.8.tgz",
+        "spec": "http://registry.npm.taobao.org/react-addons-test-utils/download/react-addons-test-utils-0.14.8.tgz",
+        "type": "remote"
+      },
+      "/home/wangxiao/dev/react/self/syllabus"
+    ]
+  ],
+  "_from": "react-addons-test-utils@http://registry.npm.taobao.org/react-addons-test-utils/download/react-addons-test-utils-0.14.8.tgz",
+  "_id": "react-addons-test-utils@0.14.8",
+  "_inCache": true,
+  "_location": "/react-addons-test-utils",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "react-addons-test-utils@http://registry.npm.taobao.org/react-addons-test-utils/download/react-addons-test-utils-0.14.8.tgz",
+    "scope": null,
+    "escapedName": "react-addons-test-utils",
+    "name": "react-addons-test-utils",
+    "rawSpec": "http://registry.npm.taobao.org/react-addons-test-utils/download/react-addons-test-utils-0.14.8.tgz",
+    "spec": "http://registry.npm.taobao.org/react-addons-test-utils/download/react-addons-test-utils-0.14.8.tgz",
+    "type": "remote"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "http://registry.npm.taobao.org/react-addons-test-utils/download/react-addons-test-utils-0.14.8.tgz",
+  "_shasum": "dcddc039e71fc3c81d80338e53a3714f14d41e1f",
+  "_shrinkwrap": null,
+  "_spec": "react-addons-test-utils@http://registry.npm.taobao.org/react-addons-test-utils/download/react-addons-test-utils-0.14.8.tgz",
+  "_where": "/home/wangxiao/dev/react/self/syllabus",
+  "bugs": {
+    "url": "https://github.com/facebook/react/issues"
+  },
+  "dependencies": {},
+  "description": "This package provides the React TestUtils add-on.",
+  "devDependencies": {},
+  "homepage": "https://github.com/facebook/react#readme",
+  "keywords": [
+    "react",
+    "react-addon"
+  ],
+  "license": "BSD-3-Clause",
+  "main": "index.js",
+  "name": "react-addons-test-utils",
+  "optionalDependencies": {},
+  "peerDependencies": {
+    "react": "^0.14.8"
+  },
+  "readme": "# react-addons-test-utils\n\nThis package provides the React TestUtils add-on.\n\nSee <https://facebook.github.io/react/docs/test-utils.html> for more information.",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/facebook/react.git"
+  },
+  "version": "0.14.8"
+}
