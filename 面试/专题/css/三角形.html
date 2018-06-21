@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>任意三角形</title>
+  <title>任意实心三角形</title>
   <style>
     #triangle{
       width:0;
@@ -12,13 +12,105 @@
       border-color: transparent transparent black transparent;
     }
 
+    .hollow-triangle{
+      position: relative;
+      height: 0;
+      width: 0;
+      border-top: 90px solid transparent;
+      border-right: 100px solid black;
+      border-bottom: 100px solid transparent;
+    }
+
+    .hollow-triangle::before{
+      position: absolute;
+      top: -87px;
+      left: 2px;
+      height: 0;
+      width: 0;
+      content: '';
+      border-top: 87px solid transparent;
+      border-right: 96px solid #fff;
+      border-bottom: 96px solid transparent;
+    }
+    .trapezoid{
+        height:100px;
+        width:100px;
+        border: 1px solid red;
+        border-radius: 50%;
+      }
+
   </style>
 </head>
 <body>
+<div class="trapezoid"></div>
 
+<div class="hollow-triangle"></div>
 <div id="triangle">
 
 </div>
+<section id="shixin" style="background-color: yellow">
+  <style>
+    #shixin{
+      background-color: yellow;
+      position: relative;
+    }
+    #shixin .triangleBig{
+      width:0;
+      height:0;
+      border-style: solid ;
+      border-width:0 100px 200px 300px;
+      border-color: transparent transparent black transparent;
+
+    }
+    #shixin .trianglesmall{
+      width:0;
+      height:0;
+      border-style: solid ;
+      border-width:0 98px 198px 298px;
+      border-color: transparent transparent white transparent;
+    }
+
+    .box,.box3
+    {
+      width:0px;
+      height:0px;
+      display: inline-block;
+      border-top:50px solid rgba(0,0,0,0);
+      border-right:50px solid  rgba(0,0,0,0);
+      border-bottom:50px solid green;
+      border-left:50px solid  rgba(0,0,0,0);
+
+      margin-bottom:10px;
+    }
+
+    .box2
+    {
+      display: inline-block;
+      width:50px;
+      height:50px;
+      background-color:green;
+    }
+
+    .box{
+      transform: translate(54px,10px);
+    }
+    .box3{
+      transform: translate(-54px,10px);
+    }
+  </style>
+
+  <div class="triangleBig">
+    <div class="trianglesmall"></div>
+  </div>
+</section>
+
+<div class='box'>
+</div>
+<div class='box2'>
+</div>
+<div class='box3'>
+</div>
+
 </body>
 <script type="text/javascript">
 

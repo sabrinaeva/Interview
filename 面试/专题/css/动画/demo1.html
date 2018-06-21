@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>动画demo1</title>
+  <!--<style>-->
+    <!--@keyframes myfist {-->
+      <!--from{-->
+        <!--background-color: red;-->
+        <!--font-size: 20px;-->
+      <!--}-->
+      <!--to{-->
+        <!--background-color: blue;-->
+        <!--font-size: 12px;-->
+      <!--}-->
+    <!--}-->
+    <!--#myfistDiv{-->
+      <!--width: 200px;-->
+      <!--height: 200px;-->
+      <!--background-color: black;-->
+      <!--animation: myfist 3s;-->
+      <!--animation-iteration-count:3;-->
+    <!--}-->
+
+  <!--</style>-->
+</head>
+<body>
+
+<!--<div id="myfistDiv">-->
+  <!--<p>asfdasfdasd</p>-->
+<!--</div>-->
+
+<script type="text/javascript">
+
+  function handleResponse(response) {
+    debugger;
+    alert('you are at IP address')
+  }
+  var script = document.createElement('script');
+  script.src = 'http://cnodejs.org/api/v1/topics/?callback=handleResponse';
+
+  document.body.insertBefore(script, document.body.firstChild);
+
+</script>
+</body>
+</html>

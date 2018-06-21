@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>函数</title>
+</head>
+<body>
+
+
+<script type="text/javascript">
+
+  function getName() {
+    console.log('1');
+  }
+
+  function Foo() {
+
+    getName = function () {
+      console.log('2');
+    }
+    debugger
+    return this;
+  }
+  //有错误
+  getName()
+  Foo()
+  getName()
+  new Foo().getName()
+  new Foo.getName()
+  new new Foo().getName()
+
+
+</script>
+</body>
+</html>

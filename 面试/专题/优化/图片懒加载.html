@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <script src="../jquery/js/jquery.2.1.4.js"></script>
   <title>图片懒加载</title>
 </head>
 <body>
@@ -31,17 +32,14 @@
 <img data-src="./img/1.png" alt="1">
 
 </body>
-<script src="./dist/js/eams-ui.js"></script>
 <script type="text/javascript">
 
   $(function(){
     var $window = $(window);
-    var lazyImgs = _.map($('img[data-src]').get(), function(i){
-      return $(i)
-    });
+    var lazyImgs = $('img[data-src]')
 
     //定义事件函数
-
+debugger
     var  onScroll = function () {
       //获取页面滚动高度
       var wtop = $window.scrollTop();
@@ -52,16 +50,16 @@
         var loadedIndex = [];
 
         //循环处理数组的每个img元素
-        _.each(lazyImgs, function ($i, index) {
+        $.each(lazyImgs, function (index, item) {
           //判断是否在可视化范围内
-          if($i.offset().top - wtop <wheight){
+          if($(item).offset().top - wtop <wheight){
             //设置src 属性
-            $i.attr('src', $i.attr("data-src"));
+            $(item).attr('src', $(item).attr("data-src"));
             loadedIndex.unshift(index)
           }
         })
         //删除一处理的对象
-        _.each(loadedIndex, function (index) {
+        $.each(loadedIndex, function (index) {
           lazyImgs.splice(index, 1);
         })
       }
